@@ -1,0 +1,85 @@
+Example.java
+
+public class Example {
+  public static void main(String[] args) {
+    System.out.println("We are making a new Pez Dispenser.");
+    PezDispenser dispenser = new PezDispenser("Donatello");
+
+    System.out.printf("The dispenser character is %s\n", dispenser.getCharacterName());
+    if (dispenser.isEmpty()) {
+      System.out.println("It is currently empty.");
+    }
+    System.out.println("Loading...");
+    dispenser.load();
+    if (!dispenser.isEmpty()) {
+      System.out.println("It is no longer empty.");
+    }
+    while (dispenser.dispense()) {
+      System.out.println("Chomp!");
+    }
+    if(dispenser.isEmpty()) {
+      System.out.println("It is currently empty.");
+    }
+    dispenser.load(4);
+    if(!dispenser.isEmpty()) {
+      System.out.println("It is no longer empty.");
+    }
+    while(dispenser.dispense()) {
+      System.out.println("Chomp!");
+    }
+    if(dispenser.isEmpty()) {
+      System.out.println("It is currently empty.");
+    }
+    try {
+      dispenser.load(400);
+      System.out.println("This will never happen.");
+      } catch (IllegalArgumentException iae) {
+        System.out.println("Whoa there!");
+        System.out.printf("The error was %s\n", iae.getMessage());
+      }
+    }
+  }
+}
+
+PezDispenser.java
+
+public class PezDispenser {
+  public static final int MAX_PEZ = 12;
+  private String mCharacterName;
+  private int mPezCount;
+
+  public PezDispenser(String characterName) {
+    mCharacterName = characterName;
+    mPezCount = 0;
+  }
+
+  public boolean dispense() {
+    boolean wasDispensed = false
+    if (!isEmpty()) {
+      mPezCount--;
+      wasDispensed = true;
+    }
+    return wasDispensed;
+  }
+
+  public boolean isEmpty() {
+    return mPezCount == 0;
+  }
+
+  // public void for simple function
+  public void load() {
+    mPezCount = MAX_PEZ;
+  }
+
+  public void load(int PezAmount) {
+    int newAmount = mPezCount + PezAmount;
+    if (newAmount > MAX_PEZ) {
+      throw new IllegalArgumentException("Too many Pez!!!");
+    }
+    mPezCount = newAmount;
+  }
+
+  public String getCharacterName() {
+    return mCharacterName;
+  }
+}
